@@ -257,7 +257,8 @@ struct ion_heap {
 
 	atomic_long_t total_allocated;
 
-	int (*debug_show)(struct ion_heap *heap, struct seq_file *, void *);
+	int (*debug_show)(struct ion_heap *heap, struct seq_file *s,
+			  void *unused);
 };
 
 /**

@@ -1287,6 +1287,7 @@ void ion_device_add_heap(struct ion_device *dev, struct ion_heap *heap)
 	struct dentry *debug_file;
 	struct dentry *heap_root;
 	char debug_name[64];
+	int ret;
 
 	if (!heap->ops->allocate || !heap->ops->free)
 		pr_err("%s: can not add heap with invalid ops struct.\n",
@@ -1299,8 +1300,11 @@ void ion_device_add_heap(struct ion_device *dev, struct ion_heap *heap)
 	if (heap->flags & ION_HEAP_FLAG_DEFER_FREE)
 		ion_heap_init_deferred_free(heap);
 
-	if ((heap->flags & ION_HEAP_FLAG_DEFER_FREE) || heap->ops->shrink)
-		ion_heap_init_shrinker(heap);
+	if ((heap->flags & ION_HEAP_FLAG_DEFER_FREE) || heap->ops->shrink) {
+		ret = ion_heap_init_shrinker(heap);
+		if (ret)
+			pr_err("%s: Failed to register shrinker\n", __func__);
+	}
 
 	heap->dev = dev;
 	heap->num_of_buffers = 0;

@@ -109,3 +109,9 @@ obj-$(CONFIG_TOUCHSCREEN_ST)		+= st/
 obj-$(CONFIG_TOUCHSCREEN_HIMAX_CHIPSET)	+= hxchipset/
 obj-$(CONFIG_TOUCHSCREEN_SYNAPTICS_TCM)	+= synaptics_tcm/
 obj-$(CONFIG_TOUCHSCREEN_RAYDIUM_CHIPSET)  += raydium_wt030/
+# HMI_M516_A01
+obj-$(CONFIG_TOUCHSCREEN_XIAOMI_C3J) += lct_tp_info.o
+obj-$(CONFIG_TOUCHSCREEN_XIAOMI_C3J) += lct_tp_selftest.o
+obj-$(CONFIG_TOUCHSCREEN_XIAOMI_C3J) += lct_tp_gesture.o
+obj-$(CONFIG_TOUCHSCREEN_XIAOMI_C3J) += lct_tp_grip_area.o
+obj-$(CONFIG_TOUCHSCREEN_XIAOMI_C3J) += lct_tp_work.o

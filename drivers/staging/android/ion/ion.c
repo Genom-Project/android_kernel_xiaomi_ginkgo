@@ -110,7 +110,6 @@ static struct ion_buffer *ion_buffer_create(struct ion_heap *heap,
 					    unsigned long flags)
 {
 	struct ion_buffer *buffer;
-	struct sg_table *table;
 	int ret;
 
 	buffer = kzalloc(sizeof(*buffer), GFP_KERNEL);
@@ -148,7 +147,6 @@ static struct ion_buffer *ion_buffer_create(struct ion_heap *heap,
 		heap->alloc_bytes_wm = heap->num_of_alloc_bytes;
 	spin_unlock(&heap->stat_lock);
 
-	table = buffer->sg_table;
 	buffer->dev = dev;
 	buffer->size = len;
 
@@ -161,6 +159,7 @@ static struct ion_buffer *ion_buffer_create(struct ion_heap *heap,
 	if (IS_ENABLED(CONFIG_ION_FORCE_DMA_SYNC)) {
 		int i;
 		struct scatterlist *sg;
+		struct sg_table *table;
 
 		/*
 		 * this will set up dma addresses for the sglist -- it is not
@@ -169,6 +168,7 @@ static struct ion_buffer *ion_buffer_create(struct ion_heap *heap,
 		 * practice on our systems the only dma_address space is
 		 * physical addresses.
 		 */
+		table = buffer->sg_table;
 		for_each_sg(table->sgl, sg, table->nents, i) {
 			sg_dma_address(sg) = sg_phys(sg);
 			sg_dma_len(sg) = sg->length;

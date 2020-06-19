@@ -4,5 +4,5 @@ jobs:
     docker:
       - image: rama982/dokar:latest
     steps:
-      - checkout
+      - run: git clone --depth 1 "https://github.com/Genom-Project/android_kernel_xiaomi_ginkgo" --branch "$CIRCLE_BRANCH" .
       - run: sh -c "$(curl -sSL https://github.com/rama982/scripts/raw/master/build_on_docker.sh)"

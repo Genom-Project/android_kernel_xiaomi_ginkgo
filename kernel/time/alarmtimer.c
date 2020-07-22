@@ -124,7 +124,7 @@ static int alarmtimer_rtc_add_device(struct device *dev,
 
 		err = rtc_irq_register(rtc, &alarmtimer_rtc_task);
 		if (err)
-			goto rtc_irq_reg_err;
+			goto unlock;
 
 		rtcdev = rtc;
 		/* hold a reference so it doesn't go away */

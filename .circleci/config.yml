@@ -1,0 +1,9 @@
+version: 2
+jobs:
+  build:
+    docker:
+      - image: rama982/dokar:debian
+    steps:
+      - run: git clone --depth 1 "https://github.com/Genom-Project/android_kernel_xiaomi_ginkgo" --branch "$CIRCLE_BRANCH" .
+      - run: curl -OsSL https://github.com/rama982/scripts/raw/master/build_on_docker.sh
+      - run: bash build_on_docker.sh vendor/ginkgo-perf_defconfig ginkgo -1001459070028
